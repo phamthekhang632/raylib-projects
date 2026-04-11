@@ -1,0 +1,160 @@
+---
+Language: Cpp
+
+# ─── Indentation & Column ────────────────────────────────────────────────────
+ColumnLimit: 100
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AccessModifierOffset: -2
+IndentCaseLabels: false
+IndentCaseBlocks: false
+IndentPPDirectives: BeforeHash
+IndentRequiresClause: true
+LambdaBodyIndentation: Signature
+NamespaceIndentation: None
+
+# ─── Alignment ───────────────────────────────────────────────────────────────
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments: None
+AlignConsecutiveBitFields: None
+AlignConsecutiveDeclarations: None
+AlignConsecutiveMacros: None
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 1
+
+# ─── Allow short forms ───────────────────────────────────────────────────────
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseExpressionOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+  # Empty: true
+  # Inline: true
+  # Other: false
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+AllowShortNamespacesOnASingleLine: false
+
+# ─── Line breaking ───────────────────────────────────────────────────────────
+BreakAfterReturnType: None
+BreakAfterAttributes: Always
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBraces: Linux
+BreakBeforeConceptDeclarations: Always
+BreakBeforeInlineASMColon: OnlyMultiline
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
+BreakTemplateDeclarations: Yes
+
+# ─── Bin packing ─────────────────────────────────────────────────────────────
+BinPackArguments: false
+BinPackParameters: OnePerLine
+
+# ─── Pointer & reference alignment ──────────────────────────────────────────
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# ─── Spaces ──────────────────────────────────────────────────────────────────
+BitFieldColonSpacing: Both
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: true
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: Never
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: false
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: 1
+SpacesInParens: Never
+SpacesInSquareBrackets: false
+
+# ─── Trailing commas & newlines ───────────────────────────────────────────────
+InsertTrailingCommas: None
+InsertNewlineAtEOF: true
+KeepEmptyLinesAtEOF: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+
+# ─── Constructor initializers ────────────────────────────────────────────────
+ConstructorInitializerIndentWidth: 4
+PackConstructorInitializers: NextLine
+
+# ─── Includes ────────────────────────────────────────────────────────────────
+SortIncludes: CaseInsensitive
+SortUsingDeclarations: LexicographicNumeric
+# WARNING: This will reorder #include directives that may break the build
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Own header (e.g. matching source file)
+  - Regex: '^".*"'
+    Priority: 1
+    SortPriority: 1
+  # C system headers
+  - Regex: '^<[a-z_]+\.h>'
+    Priority: 3
+    SortPriority: 3
+  # C++ standard library
+  - Regex: '^<[a-z]'
+    Priority: 4
+    SortPriority: 4
+  # Everything else (third-party, angle-bracket project headers)
+  - Regex: '^<.*>'
+    Priority: 2
+    SortPriority: 2
+
+# ─── Penalties ───────────────────────────────────────────────────────────────
+# Tuned to complement OnePerLine parameters and ColumnLimit: 100.
+# Higher values = clang-format tries harder to avoid that situation.
+PenaltyBreakAssignment: 100
+PenaltyBreakBeforeFirstCallParameter: 120
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakOpenParenthesis: 0
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyIndentedWhitespace: 0
+PenaltyReturnTypeOnItsOwnLine: 200
+
+# ─── Miscellaneous ───────────────────────────────────────────────────────────
+Cpp11BracedListStyle: false
+DerivePointerAlignment: false
+DisableFormat: false
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: LogicalBlock
+FixNamespaceComments: true
+# IntegerLiteralSeparator:
+#   Binary: 4
+#   Decimal: 3
+#   Hex: 4
+QualifierAlignment: Left
+RemoveBracesLLVM: false
+RemoveSemicolon: false
+RequiresClausePosition: OwnLine
+RequiresExpressionIndentation: OuterScope
+SeparateDefinitionBlocks: Leave
+ShortNamespaceLines: 1
+SkipMacroDefinitionBody: false

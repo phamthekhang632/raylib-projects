@@ -1,0 +1,41 @@
+{
+	"name": "Raylib Project",
+	"build": {
+		"dockerfile": "./Dockerfile"
+	},
+
+	"runArgs": [
+		"--net=host",
+		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"-v", "${env:HOME}/.Xauthority:/home/vscode/.Xauthority:ro"
+	],
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}",
+		"XAUTHORITY": "/home/vscode/.Xauthority"
+	},
+
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		}
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cmake-tools",
+				"ms-vscode.cpptools",
+				"xaver.clang-format"
+			],
+			"settings": {
+                "editor.defaultFormatter": "xaver.clang-format",
+                "editor.formatOnSave": true,
+                "clang-format.style": "file"
+            }
+		}
+	},
+
+	"remoteUser": "vscode",
+	"postCreateCommand": "ln -sf ${containerWorkspaceFolder}/.devcontainer/.zshrc /home/vscode/.zshrc"
+}
