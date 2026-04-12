@@ -1,6 +1,7 @@
 # raylib-container
 
-This is a template repository that provides everything you need to start developing [raylib](https://www.raylib.com/) applications in a isolated environment. It includes:
+This is a template repository that provides everything you need to start developing [raylib](https://www.raylib.com/) applications in a isolated environment.
+It includes:
 
 - **Docker environment** with all raylib dependencies pre-installed
 - **CMake build system** for modern C++ project management
@@ -21,7 +22,8 @@ git clone https://github.com/phamthekhang632/raylib-container.git raylib-project
 
 ### VS Code
 
-When opening the project with VS Code, a prompt will guide you on how to set up the project. If not , you can also follow instruction [here](https://code.visualstudio.com/docs/devcontainers/containers).
+When opening the project with VS Code, a prompt will guide you on how to set up the project.
+If not , you can also follow instruction [here](https://code.visualstudio.com/docs/devcontainers/containers).
 
 ### DevPod CLI
 
@@ -30,7 +32,6 @@ devpod up . --devcontainer-path .devcontainer/devcontainer.json --ide=none --id 
 ```
 
 Change `ide` and `id` if necessary. Connect to host:
-
 ```sh
 ssh raylib-project
 ```
@@ -40,17 +41,24 @@ ssh raylib-project
 ### pre-commit
 
 Install [pre-commit](https://pre-commit.com/#install)
-
 ```sh
 pip install pre-commit
 pre-commit install
 ```
 
 From then on, whenever you commit your changes, pre-commit will check your code for simple formatting issues.
-For more in depth analysis, run `clang-tidy` using the following command. You can also remove the line `stages: [manual]` in pre-commit to let `clang-tidy` run automatically everytime you make a commit.
-
+For more in depth analysis, run `clang-tidy` using the following command.
+You can also remove the line `stages: [manual]` in pre-commit to let `clang-tidy` run automatically everytime you make a commit.
 ```sh
 pre-commit run --hook-stage manual clang-tidy --all-files
+```
+
+### Authorize docker to use X11
+
+By default docker may not have access to use your computer screen for display.
+To give access:
+```sh
+xhost +local:docker
 ```
 
 ### `dev.sh`
