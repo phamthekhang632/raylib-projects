@@ -1,68 +1,77 @@
-/*******************************************************************************************
- *
- *   Welcome to raylib!
- *
- *   To test examples, just press F6 and execute 'raylib_compile_execute' script
- *   Note that compiled executable is placed in the same folder as .c file
- *
- *   To test the examples on Web, press F6 and execute 'raylib_compile_execute_web' script
- *   Web version of the program is generated in the same folder as .c file
- *
- *   You can find all basic examples on C:\raylib\raylib\examples folder or
- *   raylib official webpage: www.raylib.com
- *
- *   Enjoy using raylib. :)
- *
- *   Example originally created with raylib 1.0, last time updated with raylib 1.0
- *
- *   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
- *   BSD-like license that allows static linking with closed source software
- *
- *   Copyright (c) 2013-2025 Ramon Santamaria (@raysan5)
- *
- *******************************************************************************************/
-
 #include "raylib.h"
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
-int main()
+struct Game {
+    Game();
+
+    void run();
+
+    void update(double deltaTime);
+
+    void render();
+
+  private:
+    static constexpr int screenWidth = 800;
+    static constexpr int screenHeight = 450;
+    static constexpr int targetFPS = 60;
+
+    Texture2D ninjaTexture_ {};
+    Vector2 ninjaPosition_ { 100, 100 };
+    double ninjaSpeed_ { 50.0 };
+};
+
+Game::Game()
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    InitWindow(screenWidth, screenHeight, "Ninja Game");
+    ninjaTexture_ = LoadTexture("assets/images/entities/player/idle/00.png");
+    SetTargetFPS(targetFPS);
+}
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+void Game::update(double deltaTime)
+{
+    if (IsKeyDown(KEY_W)) {
+        ninjaPosition_.y -= ninjaSpeed_ * deltaTime;
+    }
+    if (IsKeyDown(KEY_A)) {
+        ninjaPosition_.x -= ninjaSpeed_ * deltaTime;
+    }
+    if (IsKeyDown(KEY_S)) {
+        ninjaPosition_.y += ninjaSpeed_ * deltaTime;
+    }
+    if (IsKeyDown(KEY_D)) {
+        ninjaPosition_.x += ninjaSpeed_ * deltaTime;
+    }
+}
 
-    SetTargetFPS(60);  // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose())  // Detect window close button or ESC key
+void Game::render()
+{
+    BeginDrawing();
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
         ClearBackground(RAYWHITE);
+        DrawTextureEx(ninjaTexture_, ninjaPosition_, 0.0f, 2.0f, WHITE);
+        DrawFPS(10, 10);
+    }
+    EndDrawing();
+}
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+void Game::run()
+{
+    while (!WindowShouldClose()) {
+        double deltaTime = GetFrameTime();
 
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        update(deltaTime);
+        render();
+
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            break;
+        }
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();  // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();
+}
 
+int main()
+{
+    Game game;
+    game.run();
     return 0;
 }
