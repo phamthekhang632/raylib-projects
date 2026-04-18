@@ -2,16 +2,23 @@
 
 #include <string>
 
-#define PATH "../assets/images/"
-
 Game::Game()
+    : camera_({
+          .offset = { (float)screen_width_ / 2, (float)screen_height_ / 2 },
+          .target = { (float)screen_width_ / 4, (float)screen_height_ / 4 },
+          .rotation = 0.0,
+          .zoom = 2.0
+}),
+      player_("player", { 50.0, 50.0 }, { 8.0, 15.0 })
 {
-    InitWindow(screenWidth, screenHeight, "Ninja Game");
-    textures_["player"] = LoadTexture(PATH "entities/player.png");
-    SetTargetFPS(targetFPS);
+    InitWindow(screen_width_, screen_height_, "Ninja Game");
+    SetTargetFPS(target_fps_);
+
+    const std::string path { "../assets/images/" };
+    textures_["player"] = LoadTexture((path + "entities/player.png").c_str());
 }
 
-void Game::update(double deltaTime)
+void Game::update(float deltaTime)
 {
     Vector2 movement { 0, 0 };
     if (IsKeyDown(KEY_A)) {
@@ -29,6 +36,7 @@ void Game::render()
 
     ClearBackground(RAYWHITE);
     DrawFPS(10, 10);
+    BeginMode2D(camera_);
     player_.render(textures_["player"]);
 
     EndDrawing();
@@ -37,9 +45,9 @@ void Game::render()
 void Game::run()
 {
     while (!WindowShouldClose()) {
-        double deltaTime = GetFrameTime();
+        float dt = GetFrameTime();
 
-        update(deltaTime);
+        update(dt);
         render();
 
         if (IsKeyPressed(KEY_ESCAPE)) {

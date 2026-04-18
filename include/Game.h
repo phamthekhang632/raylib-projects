@@ -10,20 +10,18 @@ public:
 
     void run();
 
-    void update(double deltaTime);
+    void update(float deltaTime);
 
     void render();
 
 private:
-    static constexpr int screenWidth = 800;
-    static constexpr int screenHeight = 450;
-    static constexpr int targetFPS = 60;
+    const int screen_width_ = 600;
+    const int screen_height_ = 480;
+    const int target_fps_ = 60;
 
-    PhysicsEntity player_ {
-        "player",
-        { 100, 100 },
-        {  32,  32 }
-    };
+    Camera2D camera_;
+
+    PhysicsEntity player_;
 
     std::unordered_map<std::string, Texture2D> textures_;  // <type, texture>
 };
