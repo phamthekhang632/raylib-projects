@@ -1,4 +1,5 @@
 #include <Game.h>
+#include <Utils.h>
 
 #include <string>
 
@@ -15,7 +16,7 @@ Game::Game()
     SetTargetFPS(target_fps_);
 
     const std::string path { "../assets/images/" };
-    textures_["player"] = LoadTexture((path + "entities/player.png").c_str());
+    textures_["player"] = loadTextureKey(path + "entities/player.png", BLACK);
 }
 
 void Game::update(float deltaTime)
@@ -34,7 +35,7 @@ void Game::render()
 {
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    ClearBackground(Color { 14, 219, 248 });
     DrawFPS(10, 10);
     BeginMode2D(camera_);
     player_.render(textures_["player"]);
