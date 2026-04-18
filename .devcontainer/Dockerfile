@@ -16,10 +16,10 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions \
     && chsh -s /bin/zsh vscode
 
 # Build and install raylib
-WORKDIR /usr/local/
-RUN git clone https://github.com/raysan5/raylib.git raylib \
-    && cd raylib \
-    && mkdir build && cd build \
-    && cmake .. \
-	&& make install \
-    && ldconfig
+# WORKDIR /usr/local/
+# RUN git clone https://github.com/raysan5/raylib.git raylib \
+#     && cd raylib \
+#     && mkdir build && cd build \
+#     && cmake .. \
+# 	&& make install \
+#     && ldconfig
