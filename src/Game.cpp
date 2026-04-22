@@ -15,8 +15,11 @@ Game::Game()
     InitWindow(screen_width_, screen_height_, "Ninja Game");
     SetTargetFPS(target_fps_);
 
-    const std::string path { "../assets/images/" };
-    textures_["player"] = loadTextureKey(path + "entities/player.png", BLACK);
+    const std::string image_path { "../assets/images/" };
+    textures_["player"] = { loadTextureKey(image_path + "entities/player.png", BLACK) };
+    textures_["grass"] = loadTextureKeyFolder(image_path + "tiles/grass", BLANK);
+    textures_["stone"] = loadTextureKeyFolder(image_path + "tiles/stone", BLANK);
+    // TOFIX: load texture for grass and stone
 }
 
 void Game::update(float deltaTime)
@@ -38,7 +41,8 @@ void Game::render()
     ClearBackground(Color { 14, 219, 248 });
     DrawFPS(10, 10);
     BeginMode2D(camera_);
-    player_.render(textures_["player"]);
+    tile_map_.render(textures_);
+    player_.render(textures_["player"][0]);
 
     EndDrawing();
 }

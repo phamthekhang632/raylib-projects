@@ -19,7 +19,9 @@ fetchcontent_declare(
 fetchcontent_makeavailable(raylib)
 # endif(NOT raylib_FOUND)
 
-add_executable(raylib_project src/Entities.cpp src/Game.cpp src/main.cpp)
+add_executable(
+    raylib_project src/Entities.cpp src/Game.cpp src/main.cpp src/TileMap.cpp
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_compile_definitions(

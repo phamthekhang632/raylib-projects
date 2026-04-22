@@ -1,7 +1,11 @@
+#pragma once
+
 #include <Entities.h>
 #include <raylib.h>
+#include <TileMap.h>
 
 #include <unordered_map>
+#include <vector>
 
 class Game
 {
@@ -23,5 +27,7 @@ private:
 
     PhysicsEntity player_;
 
-    std::unordered_map<std::string, Texture2D> textures_;  // <type, texture>
+    TileMap tile_map_;
+
+    std::unordered_map<std::string, std::vector<Texture2D>> textures_;
 };

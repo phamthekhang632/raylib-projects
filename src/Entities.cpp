@@ -10,5 +10,5 @@ void PhysicsEntity::update(Vector2 movement, float deltaTime)
 
 void PhysicsEntity::render(Texture2D texture)
 {
-    DrawTextureEx(texture, position_, 0.0, 1.0, WHITE);
+    DrawTextureV(texture, position_, WHITE);
 }
