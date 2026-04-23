@@ -1,7 +1,5 @@
 #pragma once
 
-// #include <Game.h>
-
 #include <raylib.h>
 
 #include <string>

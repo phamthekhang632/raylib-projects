@@ -6,6 +6,8 @@ void PhysicsEntity::update(Vector2 movement, float deltaTime)
 
     position_.x += frame_movement.x * speed_ * deltaTime;
     position_.y += frame_movement.y * speed_ * deltaTime;
+
+    velocity_.y = std::min(5.0F, velocity_.y + 0.1F);
 }
 
 void PhysicsEntity::render(Texture2D texture)
