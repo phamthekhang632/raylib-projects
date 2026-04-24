@@ -7,9 +7,7 @@
 class PhysicsEntity
 {
 public:
-    PhysicsEntity(std::string type, Vector2 position, Vector2 size)
-        : type_(std::move(type)), position_(position), size_(size) { };
-
+    PhysicsEntity(std::string type, Rectangle box) : type_(std::move(type)), box_(box) { };
     ~PhysicsEntity() = default;
 
     PhysicsEntity(const PhysicsEntity&) = delete;
@@ -19,13 +17,7 @@ public:
 
     void update(Vector2 movement, float deltaTime);
 
-    void render(Texture2D texture);
-
-    [[nodiscard]]
-    Vector2 getPosition() const
-    {
-        return position_;
-    }
+    void render(Texture2D texture) const;
 
     [[nodiscard]]
     Vector2 getVelocity() const
@@ -35,8 +27,7 @@ public:
 
 private:
     const std::string type_;
-    Vector2 position_;
+    Rectangle box_;
     Vector2 velocity_ { 0.0, 0.0 };
     float speed_ { 100.0 };
-    Vector2 size_;
 };

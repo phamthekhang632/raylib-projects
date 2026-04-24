@@ -10,7 +10,7 @@ Game::Game()
           .rotation = 0.0,
           .zoom = 2.0
 }),
-      player_("player", { 50.0, 50.0 }, { 8.0, 15.0 })
+      player_("player", (Rectangle) { .x = 50.0, .y = 50.0, .width = 8.0, .height = 15.0 })
 {
     InitWindow(screen_width_, screen_height_, "Ninja Game");
     SetTargetFPS(target_fps_);
