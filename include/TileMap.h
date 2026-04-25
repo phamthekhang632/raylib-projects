@@ -7,6 +7,18 @@
 #include <unordered_map>
 #include <vector>
 
+namespace tile
+{
+
+using Coordinate = std::pair<int, int>;
+
+struct CoordinateHash {
+    size_t operator()(const std::pair<int, int>& v) const
+    {
+        return std::hash<int> {}(v.first) ^ (std::hash<int> {}(v.second) << 1);
+    }
+};
+
 class TileMap
 {
 public:
@@ -14,8 +26,16 @@ public:
 
     void render(const std::unordered_map<std::string, std::vector<Texture2D>>& textures);
 
+    Coordinate convertWorld2Tile(float x, float y) const;
+
+    std::vector<Coordinate> tilesArround(float x, float y) const;
+
+    std::vector<Rectangle> physicsTilesArround(float x, float y) const;
+
 private:
     int tile_size_;
-    std::map<std::pair<int, int>, std::pair<std::string, uint>> grid_map_;
-    std::map<std::pair<int, int>, std::pair<std::string, uint>> background_map_;
+    std::unordered_map<Coordinate, std::pair<std::string, uint>, CoordinateHash> grid_map_;
+    std::unordered_map<Coordinate, std::pair<std::string, uint>, CoordinateHash> background_map_;
 };
+
+}  // namespace tile

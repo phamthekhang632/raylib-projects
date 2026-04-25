@@ -31,7 +31,10 @@ void Game::update(float deltaTime)
     if (IsKeyDown(KEY_D)) {
         movement.x = 1;
     }
-    player_.update(movement, deltaTime);
+    if (IsKeyPressed(KEY_SPACE)) {
+        player_.setVelocity({ 0.0, -3 });
+    }
+    player_.update(tile_map_, movement, deltaTime);
 }
 
 void Game::render()

@@ -25,9 +25,9 @@ private:
 
     Camera2D camera_;
 
-    PhysicsEntity player_;
+    physics::PhysicsEntity player_;
 
-    TileMap tile_map_;
+    tile::TileMap tile_map_;
 
     std::unordered_map<std::string, std::vector<Texture2D>> textures_;
 };
