@@ -14,6 +14,7 @@ Game::Game()
     SetTargetFPS(target_fps);
 
     const std::string image_path { "../assets/images/" };
+    textures_["background"] = { loadTextureKey(image_path + "background.png", BLANK) };
     textures_["player"] = { loadTextureKey(image_path + "entities/player.png", BLACK) };
     textures_["grass"] = loadTextureKeyFolder(image_path + "tiles/grass", BLANK);
     textures_["stone"] = loadTextureKeyFolder(image_path + "tiles/stone", BLANK);
@@ -42,11 +43,17 @@ void Game::render()
 {
     BeginDrawing();
 
-    ClearBackground(Color { 14, 219, 248 });
+    // ClearBackground(RAYWHITE);
+    DrawTextureEx(textures_["background"][0], { 0.0, 0.0 }, 0.0, camera_.raw().zoom, WHITE);
+
     DrawFPS(10, 10);
+
     BeginMode2D(camera_.raw());
-    tile_map_.render(textures_);
-    player_.render(textures_["player"][0]);
+    {
+        tile_map_.render(textures_);
+        player_.render(textures_["player"][0]);
+    }
+    EndMode2D();
 
     EndDrawing();
 }
