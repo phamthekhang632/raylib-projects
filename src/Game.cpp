@@ -4,25 +4,24 @@
 #include <string>
 
 Game::Game()
-    : camera_({
-          .offset = { (float)screen_width_ / 2, (float)screen_height_ / 2 },
-          .target = { (float)screen_width_ / 4, (float)screen_height_ / 4 },
-          .rotation = 0.0,
-          .zoom = 2.0
-}),
+    : camera_({ (float)screen_width / 2, (float)screen_height / 2 },
+              { (float)screen_width / 4, (float)screen_height / 4 },
+              0.0,
+              2.0),
       player_("player", (Rectangle) { .x = 50.0, .y = 50.0, .width = 8.0, .height = 15.0 })
 {
-    InitWindow(screen_width_, screen_height_, "Ninja Game");
-    SetTargetFPS(target_fps_);
+    InitWindow(screen_width, screen_height, "Ninja Game");
+    SetTargetFPS(target_fps);
 
     const std::string image_path { "../assets/images/" };
     textures_["player"] = { loadTextureKey(image_path + "entities/player.png", BLACK) };
     textures_["grass"] = loadTextureKeyFolder(image_path + "tiles/grass", BLANK);
     textures_["stone"] = loadTextureKeyFolder(image_path + "tiles/stone", BLANK);
-    // TOFIX: load texture for grass and stone
+
+    camera_.setCameraMode(raylib_ex::Camera2DExMode::FOLLOW);
 }
 
-void Game::update(float deltaTime)
+void Game::update()
 {
     Vector2 movement { 0, 0 };
     if (IsKeyDown(KEY_A)) {
@@ -34,7 +33,9 @@ void Game::update(float deltaTime)
     if (IsKeyPressed(KEY_SPACE)) {
         player_.setVelocity({ 0.0, -3 });
     }
-    player_.update(tile_map_, movement, deltaTime);
+    player_.update(tile_map_, movement, dt_);
+
+    camera_.update(player_, tile_map_, dt_, screen_width, screen_height);
 }
 
 void Game::render()
@@ -43,7 +44,7 @@ void Game::render()
 
     ClearBackground(Color { 14, 219, 248 });
     DrawFPS(10, 10);
-    BeginMode2D(camera_);
+    BeginMode2D(camera_.raw());
     tile_map_.render(textures_);
     player_.render(textures_["player"][0]);
 
@@ -53,9 +54,9 @@ void Game::render()
 void Game::run()
 {
     while (!WindowShouldClose()) {
-        float dt = GetFrameTime();
+        dt_ = GetFrameTime();
 
-        update(dt);
+        update();
         render();
 
         if (IsKeyPressed(KEY_ESCAPE)) {

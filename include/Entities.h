@@ -1,7 +1,7 @@
 #pragma once
 
-#include <raylib.h>
 #include <TileMap.h>
+#include <raylib.h>
 
 #include <string>
 #include <vector>
@@ -12,6 +12,8 @@ namespace physics
 class PhysicsEntity
 {
 public:
+    PhysicsEntity() = default;
+
     PhysicsEntity(std::string type, Rectangle box) : type_(std::move(type)), box_(box) { };
     ~PhysicsEntity() = default;
 
@@ -25,9 +27,15 @@ public:
     void render(Texture2D texture) const;
 
     [[nodiscard]]
-    Vector2 getVelocity() const
+    Vector2 velocity() const
     {
         return velocity_;
+    }
+
+    [[nodiscard]]
+    Rectangle box() const
+    {
+        return box_;
     }
 
     void setVelocity(Vector2 velocity_change)
@@ -38,7 +46,7 @@ public:
 
 private:
     const std::string type_;
-    Rectangle box_;
+    Rectangle box_ { 0.0, 0.0, 0.0, 0.0 };
     Vector2 velocity_ { 0.0, 0.0 };
     float speed_ { 50.0 };
 };

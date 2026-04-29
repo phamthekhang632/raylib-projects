@@ -1,5 +1,6 @@
 ---
 Language: Cpp
+BasedOnStyle: Google
 
 # ─── Indentation & Column ────────────────────────────────────────────────────
 ColumnLimit: 100
@@ -102,28 +103,28 @@ MaxEmptyLinesToKeep: 1
 ConstructorInitializerIndentWidth: 4
 PackConstructorInitializers: NextLine
 
-# ─── Includes ────────────────────────────────────────────────────────────────
-SortIncludes: CaseInsensitive
-SortUsingDeclarations: LexicographicNumeric
-# WARNING: This will reorder #include directives that may break the build
-IncludeBlocks: Regroup
-IncludeCategories:
-  # Own header (e.g. matching source file)
-  - Regex: '^".*"'
-    Priority: 1
-    SortPriority: 1
-  # C system headers
-  - Regex: '^<[a-z_]+\.h>'
-    Priority: 3
-    SortPriority: 3
-  # C++ standard library
-  - Regex: '^<[a-z]'
-    Priority: 4
-    SortPriority: 4
-  # Everything else (third-party, angle-bracket project headers)
-  - Regex: '^<.*>'
-    Priority: 2
-    SortPriority: 2
+# # ─── Includes ────────────────────────────────────────────────────────────────
+# SortIncludes: CaseInsensitive
+# SortUsingDeclarations: LexicographicNumeric
+# # WARNING: This will reorder #include directives that may break the build
+# IncludeBlocks: Regroup
+# IncludeCategories:
+#   # Own header (e.g. matching source file)
+#   - Regex: '^".*"'
+#     Priority: 1
+#     SortPriority: 1
+#   # C system headers
+#   - Regex: '^<[a-z_]+\.h>'
+#     Priority: 3
+#     SortPriority: 3
+#   # C++ standard library
+#   - Regex: '^<[a-z]'
+#     Priority: 4
+#     SortPriority: 4
+#   # Everything else (third-party, angle-bracket project headers)
+#   - Regex: '^<.*>'
+#     Priority: 2
+#     SortPriority: 2
 
 # ─── Penalties ───────────────────────────────────────────────────────────────
 # Tuned to complement OnePerLine parameters and ColumnLimit: 100.
