@@ -29,7 +29,7 @@ private:
 
     physics::PhysicsEntity player_;
 
-    tile::TileMap tile_map_;
+    environment::TileMap tile_map_;
 
     std::unordered_map<std::string, std::vector<Texture2D>> textures_;
 };

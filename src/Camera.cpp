@@ -15,7 +15,7 @@ Camera2DEx::Camera2DEx(const Vector2& offset,
 }
 
 void Camera2DEx::update(const physics::PhysicsEntity& player,
-                        const tile::TileMap& tile_map,
+                        const environment::TileMap& tile_map,
                         const float& delta,
                         const int& screen_width,
                         const int& screen_height)

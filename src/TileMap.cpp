@@ -4,7 +4,7 @@
 #include <iostream>
 #include <set>
 
-namespace tile
+namespace environment
 {
 
 // clang-format off
@@ -86,4 +86,4 @@ std::vector<Rectangle> TileMap::physicsTilesArround(float x, float y) const
     return tiles_arround;
 }
 
-}  // namespace tile
+}  // namespace environment

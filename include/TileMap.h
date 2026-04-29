@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace tile
+namespace environment
 {
 
 using Coordinate = std::pair<int, int>;
@@ -38,4 +38,4 @@ private:
     std::unordered_map<Coordinate, std::pair<std::string, uint>, CoordinateHash> background_map_;
 };
 
-}  // namespace tile
+}  // namespace environment

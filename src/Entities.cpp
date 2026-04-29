@@ -3,7 +3,7 @@
 namespace physics
 {
 
-void PhysicsEntity::update(const tile::TileMap& tile_map,
+void PhysicsEntity::update(const environment::TileMap& tile_map,
                            const Vector2& movement,
                            const float& deltaTime)
 {

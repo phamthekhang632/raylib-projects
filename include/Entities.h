@@ -22,7 +22,9 @@ public:
     PhysicsEntity(PhysicsEntity&&) = delete;
     PhysicsEntity& operator=(PhysicsEntity&&) = delete;
 
-    void update(const tile::TileMap& tile_map, const Vector2& movement, const float& deltaTime);
+    void update(const environment::TileMap& tile_map,
+                const Vector2& movement,
+                const float& deltaTime);
 
     void render(Texture2D texture) const;
 

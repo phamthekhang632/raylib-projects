@@ -29,7 +29,7 @@ public:
     Camera2DEx& operator=(Camera2DEx&&) = delete;
 
     void update(const physics::PhysicsEntity& player,
-                const tile::TileMap& tile_map,
+                const environment::TileMap& tile_map,
                 const float& delta,
                 const int& screen_width,
                 const int& screen_height);
