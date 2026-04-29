@@ -19,9 +19,9 @@ public:
     void render();
 
 private:
-    const int screen_width_ = 600;
-    const int screen_height_ = 480;
-    const int target_fps_ = 60;
+    static constexpr int screen_width { 600 };
+    static constexpr int screen_height { 480 };
+    static constexpr int target_fps { 60 };
 
     Camera2D camera_;
 
