@@ -24,7 +24,9 @@ class TileMap
 public:
     TileMap(int tile_size = 16);
 
-    void render(const std::unordered_map<std::string, std::vector<Texture2D>>& textures);
+    void render(const std::unordered_map<std::string, std::vector<Texture2D>>& textures,
+                const Vector2& top_left,
+                const Vector2& bottom_right);
 
     Coordinate convertWorld2Tile(float x, float y) const;
 

@@ -10,7 +10,6 @@ Game::Game()
               2.0),
       player_("player", (Rectangle) { .x = 50.0, .y = 50.0, .width = 8.0, .height = 15.0 }),
       gen_(std::random_device {}())
-
 {
     InitWindow(screen_width, screen_height, "Ninja Game");
     SetTargetFPS(target_fps);
@@ -78,6 +77,10 @@ void Game::update()
 
 void Game::render()
 {
+    Vector2 top_left = GetScreenToWorld2D({ 0, 0 }, camera_.raw());
+    Vector2 bottom_right = GetScreenToWorld2D({ (float)screen_width, (float)screen_height },
+                                              camera_.raw());
+
     BeginDrawing();
 
     DrawTextureEx(textures_["background"][0], { 0.0, 0.0 }, 0.0, camera_.raw().zoom, WHITE);
@@ -90,7 +93,7 @@ void Game::render()
             cloud->render({ player_.box().x, player_.box().y });
         }
 
-        tile_map_.render(textures_);
+        tile_map_.render(textures_, top_left, bottom_right);
         player_.render(textures_["player"][0]);
     }
     EndMode2D();

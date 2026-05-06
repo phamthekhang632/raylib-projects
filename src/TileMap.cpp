@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <ranges>
 #include <set>
 
 namespace environment
@@ -25,19 +26,41 @@ TileMap::TileMap(int tile_size) : tile_size_(tile_size)
     }
 }
 
-void TileMap::render(const std::unordered_map<std::string, std::vector<Texture2D>>& textures)
+void TileMap::render(const std::unordered_map<std::string, std::vector<Texture2D>>& textures,
+                     const Vector2& top_left,
+                     const Vector2& bottom_right)
 {
     /* Render background */
-    for (const auto& [coor, type] : background_map_) {
-        DrawTexture(textures.at(type.first)[type.second], coor.first, coor.second, WHITE);
+    auto x_background = std::views::iota(static_cast<int>(top_left.x),
+                                         static_cast<int>(bottom_right.x));
+    auto y_background = std::views::iota(static_cast<int>(top_left.y),
+                                         static_cast<int>(bottom_right.y));
+    for (const auto& x : x_background) {
+        for (const auto& y : y_background) {
+            if (background_map_.contains(Coordinate(x, y))) {
+                const auto& type = background_map_.at({ x, y });
+                DrawTexture(textures.at(type.first)[type.second], x, y, WHITE);
+            }
+        }
     }
 
     /* Render grid */
-    for (const auto& [coor, type] : grid_map_) {
-        DrawTexture(textures.at(type.first)[type.second],
-                    coor.first * tile_size_,
-                    coor.second * tile_size_,
-                    WHITE);
+    auto x_grid = std::views::iota(
+        static_cast<int>(std::floor(top_left.x / static_cast<float>(tile_size_))),
+        static_cast<int>(std::ceil(bottom_right.x / static_cast<float>(tile_size_))));
+    auto y_grid = std::views::iota(
+        static_cast<int>(std::floor(top_left.y / static_cast<float>(tile_size_))),
+        static_cast<int>(std::ceil(bottom_right.y / static_cast<float>(tile_size_))));
+    for (const auto& x : x_grid) {
+        for (const auto& y : y_grid) {
+            if (grid_map_.contains(Coordinate(x, y))) {
+                const auto& type = grid_map_.at({ x, y });
+                DrawTexture(textures.at(type.first)[type.second],
+                            x * tile_size_,
+                            y * tile_size_,
+                            WHITE);
+            }
+        }
     }
 }
 
