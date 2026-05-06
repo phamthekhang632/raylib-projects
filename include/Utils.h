@@ -10,14 +10,21 @@
 
 namespace fs = std::filesystem;
 
-Texture2D loadTextureKey(const std::string& path, const Color& color_key)
+template <typename... Args>
+inline void logInfo(Args... args)
+{
+    ((std::cout << args << " "), ...) << std::endl;
+}
+
+inline Texture2D loadTextureKey(const std::string& path, const Color& color_key)
 {
     Image image = LoadImage(path.c_str());
     ImageColorReplace(&image, color_key, BLANK);
     return LoadTextureFromImage(image);
 }
 
-std::vector<Texture2D> loadTextureKeyFolder(const std::string& folder_path, const Color& color_key)
+inline std::vector<Texture2D> loadTextureKeyFolder(const std::string& folder_path,
+                                                   const Color& color_key)
 {
     std::vector<fs::path> paths;
     for (const fs::directory_entry& entry : fs::directory_iterator(folder_path)) {

@@ -1,10 +1,12 @@
 #pragma once
 
 #include <Camera.h>
+#include <Cloud.h>
 #include <Entities.h>
 #include <TileMap.h>
 #include <raylib.h>
 
+#include <random>
 #include <unordered_map>
 #include <vector>
 
@@ -30,6 +32,10 @@ private:
     physics::PhysicsEntity player_;
 
     environment::TileMap tile_map_;
-
+    std::multimap<float, std::unique_ptr<environment::Cloud>> clouds_;
+    const int cloud_count_ = 24;
     std::unordered_map<std::string, std::vector<Texture2D>> textures_;
+
+    // std::random_device rd;
+    std::mt19937 gen_;
 };
