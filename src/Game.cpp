@@ -8,23 +8,79 @@ Game::Game()
               { (float)screen_width / 4, (float)screen_height / 4 },
               0.0,
               2.0),
-      player_("player", (Rectangle) { .x = 50.0, .y = 50.0, .width = 8.0, .height = 15.0 }),
+      player_((Rectangle) { .x = 50.0, .y = 50.0, .width = 8.0, .height = 15.0 }),
       gen_(std::random_device {}())
 {
     InitWindow(screen_width, screen_height, "Ninja Game");
     SetTargetFPS(target_fps);
 
+    /* Load textures */
     const std::string image_path { "../assets/images/" };
     textures_["background"] = { loadTextureKey(image_path + "background.png", BLACK) };
-    textures_["player"] = { loadTextureKey(image_path + "entities/player.png", BLACK) };
-    textures_["grass"] = loadTextureKeyFolder(image_path + "tiles/grass", BLACK);
-    textures_["stone"] = loadTextureKeyFolder(image_path + "tiles/stone", BLACK);
     textures_["cloud"] = loadTextureKeyFolder(image_path + "clouds", BLACK);
 
+    // textures_["player"] = { loadTextureKey(image_path + "entities/player.png", BLACK) };
+    textures_["player/idle_left"] = loadTextureKeyFolder(image_path + "entities/player/idle",
+                                                         BLACK,
+                                                         true);
+    textures_["player/jump_left"] = loadTextureKeyFolder(image_path + "entities/player/jump",
+                                                         BLACK,
+                                                         true);
+    textures_["player/run_left"] = loadTextureKeyFolder(image_path + "entities/player/run",
+                                                        BLACK,
+                                                        true);
+    textures_["player/slide_left"] = loadTextureKeyFolder(image_path + "entities/player/slide",
+                                                          BLACK,
+                                                          true);
+    textures_["player/wall_slide_left"] =
+        loadTextureKeyFolder(image_path + "entities/player/wall_slide", BLACK, true);
+    textures_["player/idle_right"] = loadTextureKeyFolder(image_path + "entities/player/idle",
+                                                          BLACK);
+    // textures_["player/jump_right"] = loadTextureKeyFolder(image_path + "entities/player/jump",
+    //                                                       BLACK);
+    textures_["player/jump_right"] = { loadTextureKey(image_path + "entities/player/jump/0.png",
+                                                      BLACK) };
+    textures_["player/run_right"] = loadTextureKeyFolder(image_path + "entities/player/run", BLACK);
+    textures_["player/slide_right"] = loadTextureKeyFolder(image_path + "entities/player/slide",
+                                                           BLACK);
+    textures_["player/wall_slide_right"] =
+        loadTextureKeyFolder(image_path + "entities/player/wall_slide", BLACK, true);
+
+    textures_["grass"] = loadTextureKeyFolder(image_path + "tiles/grass", BLACK);
+    textures_["stone"] = loadTextureKeyFolder(image_path + "tiles/stone", BLACK);
+
+    physics::PhysicsEntity::textures =
+        std::make_unique<std::unordered_map<std::string, std::vector<Texture2D>>>(textures_);
+
+    /* Load animations */
+    animations_.emplace("player/idle",
+                        Animation(&textures_["player/idle_right"],
+                                  &textures_["player/idle_left"],
+                                  6));
+    animations_.emplace("player/jump",
+                        Animation(&textures_["player/jump_right"], &textures_["player/jump_left"]));
+    animations_.emplace("player/run",
+                        Animation(&textures_["player/run_right"],
+                                  &textures_["player/run_left"],
+                                  4));
+    animations_.emplace("player/slide",
+                        Animation(&textures_["player/slide_right"],
+                                  &textures_["player/slide_left"]));
+    animations_.emplace("player/wall_slide",
+                        Animation(&textures_["player/wall_slide_right"],
+                                  &textures_["player/wall_slide_left"]));
+
+    physics::PhysicsEntity::animations =
+        std::make_unique<std::unordered_map<std::string, Animation>>(animations_);
+
+    player_.setAction("idle");
+
+    /* Load background */
     environment::Cloud::setPositionXDist(0, screen_width);
     environment::Cloud::setPositionYDist(0, screen_height);
     clouds_ = environment::Cloud::generateBatch(gen_, textures_["cloud"], 16);
 
+    /* Setup camera mode */
     camera_.setCameraMode(raylib_ex::Camera2DExMode::FOLLOW);
 }
 
@@ -94,7 +150,7 @@ void Game::render()
         }
 
         tile_map_.render(textures_, top_left, bottom_right);
-        player_.render(textures_["player"][0]);
+        player_.render();
     }
     EndMode2D();
 

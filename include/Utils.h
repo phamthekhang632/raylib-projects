@@ -2,43 +2,50 @@
 
 #include <raylib.h>
 
-#include <algorithm>
-#include <filesystem>
-#include <iostream>
+#include <cmath>
+#include <cstdint>
 #include <string>
 #include <vector>
 
-namespace fs = std::filesystem;
-
 template <typename... Args>
-inline void logInfo(Args... args)
+void logInfo(Args... args);
+
+Texture2D loadTextureKey(const std::string& path,
+                         const Color& color_key,
+                         bool flip_x = false,
+                         bool flip_y = false);
+
+// TODO: shared_ptr
+std::vector<Texture2D> loadTextureKeyFolder(const std::string& folder_path,
+                                            const Color& color_key,
+                                            bool flip_x = false,
+                                            bool flip_y = false);
+
+class Animation
 {
-    ((std::cout << args << " "), ...) << std::endl;
-}
+public:
+    Animation(const std::vector<Texture2D>* sprites,
+              const std::vector<Texture2D>* sprites_flipped = nullptr,
+              uint8_t img_duration = 5,
+              bool loop = true);
+    ~Animation() = default;
 
-inline Texture2D loadTextureKey(const std::string& path, const Color& color_key)
-{
-    Image image = LoadImage(path.c_str());
-    ImageColorReplace(&image, color_key, BLANK);
-    return LoadTextureFromImage(image);
-}
+    Animation(const Animation&) = default;
+    Animation& operator=(const Animation&) = default;
+    Animation(Animation&&) = delete;
+    Animation& operator=(Animation&&) = delete;
 
-inline std::vector<Texture2D> loadTextureKeyFolder(const std::string& folder_path,
-                                                   const Color& color_key)
-{
-    std::vector<fs::path> paths;
-    for (const fs::directory_entry& entry : fs::directory_iterator(folder_path)) {
-        if (entry.is_regular_file()) {
-            paths.emplace_back(entry.path());
-        }
-    }
-    std::ranges::sort(paths.begin(), paths.end());
+    void update();
 
-    std::vector<Texture2D> textures;
-    textures.reserve(paths.size());
-    for (auto& path : paths) {
-        textures.emplace_back(loadTextureKey(path, color_key));
-    }
+    [[nodiscard]]
+    const Texture2D& currentFrame(bool flipped = false) const;
 
-    return textures;
-}
+private:
+    const std::vector<Texture2D>* sprites_;
+    const std::vector<Texture2D>* sprites_flipped_;
+
+    uint64_t frame_ { 0 };
+    uint8_t img_duration_ { 5 };
+    bool loop_ { true };
+    bool done_ { true };
+};
